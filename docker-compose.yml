@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: myapp-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=myappdb
+      - MYSQL_USER=myuser
+      - MYSQL_PASSWORD=mypassword
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - myapp-network
+
+  php-app:
+    build: .
+    container_name: myapp-php
+    ports:
+      - "8081:80"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=myappdb
+      - DB_USER=myuser
+      - DB_PASS=mypassword
+    depends_on:
+      - db
+    networks:
+      - myapp-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      - PMA_HOST=myapp-db
+      - PMA_USER=myuser
+      - PMA_PASSWORD=mypassword
+    depends_on:
+      - db
+    networks:
+      - myapp-network
+
+networks:
+  myapp-network:
+
+volumes:
+  db_data:
