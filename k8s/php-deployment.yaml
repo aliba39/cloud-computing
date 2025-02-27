@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-deployment
+spec:
+  imagePullSecrets:
+  - name: my-registry-secret
+  replicas: 3  
+  selector:
+    matchLabels:
+      app: myapp-php
+  template:
+    metadata:
+      labels:
+        app: myapp-php
+    spec:
+      containers:
+      - name: php-container
+        image: aliba39/php-app:latest 
+        env:
+        - name: DB_HOST
+          value: "mysql-service"  
+        - name: DB_NAME
+          value: "myappdb"
+        - name: DB_USER
+          value: "myuser"
+        - name: DB_PASS
+          value: "mypassword"
+        ports:
+        - containerPort: 80
