@@ -9,4 +9,4 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
-  type: NodePort  # للسماح بالوصول من خارج الـ Cluster (في Minikube أو غيره)
+  type: NodePort 
