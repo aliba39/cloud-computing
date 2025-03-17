@@ -34,4 +34,4 @@ spec:
         configMap:
           name: init-sql-config
       - name: mysql-data
-        emptyDir: {}  # في بيئة حقيقية قد تستخدم PersistentVolumeClaim
+        emptyDir: {}  
