@@ -48,8 +48,8 @@ docker-compose up --build
 
 ### ✅ 3. Database Login:
 - **Host**: `mysql`
-- **Username**: `root`
-- **Password**: `root`
+- **Username**: `myuser`
+- **Password**: `mypassword`
 
 ---
 
