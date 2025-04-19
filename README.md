@@ -164,4 +164,4 @@ This project is prepared for educational purposes and can be reused as a cloud d
 
 ---
 
-Good luck with your presentation! 🚀
+Good luck! 🚀
