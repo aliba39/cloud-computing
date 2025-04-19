@@ -58,7 +58,7 @@ docker-compose up --build
 
 ### ✅ 2. Create a ConfigMap for the init.sql file:
 ```bash
-kubectl create configmap init-sql-config --from-file=scripts/init.sql
+kubectl create configmap mysql-configmap --from-file=scripts/init.sql
 ```
 
 ### ✅ 3. Apply the manifests:
@@ -105,7 +105,7 @@ gcloud container clusters get-credentials php-app-cluster --region us-central1
 
 ### ✅ 3. Create ConfigMap for init.sql:
 ```bash
-kubectl create configmap init-sql-config \
+kubectl create configmap mysql-configmap \
   --from-file=scripts/init.sql
 ```
 
