@@ -1,15 +1,16 @@
+
 # php-app
 
-مشروع تطبيقي باستخدام PHP + MySQL + phpMyAdmin مع النشر على Google Kubernetes Engine (GKE).
+A practical project using PHP + MySQL + phpMyAdmin with deployment via Docker, Kubernetes, and Google Kubernetes Engine (GKE).
 
 ---
 
-## 📅 وصف المشروع
-تطبيق ويب بسيط يتيح للمستخدمين تسجيل الدخول والتسجيل باستخدام قاعدة بيانات MySQL. تمت إدارة قاعدة البيانات عبر phpMyAdmin، وتم نشر المشروع على Google Cloud Platform باستخدام Kubernetes.
+## 📌 Project Description
+A simple web application that allows users to register and log in using a MySQL database. The database is managed via phpMyAdmin. The project was tested locally with Docker, deployed on Kubernetes, and finally hosted on Google Cloud Platform using GKE.
 
 ---
 
-## 📂 هيكل الملفات
+## 📁 Project Structure
 ```bash
 php-app/
 ├── Dockerfile
@@ -34,11 +35,59 @@ php-app/
 
 ---
 
-## ⚙️ المتطلبات المسبقة
-- حساب Google Cloud Platform
-- تفعيل Kubernetes Engine API
-- تنصيب Google Cloud SDK
-- تهيئة CLI:
+## 🐳 Run the Project Locally with Docker
+
+### ✅ 1. Build and run the services:
+```bash
+docker-compose up --build
+```
+
+### ✅ 2. Access the services:
+- PHP App: [http://localhost:8080](http://localhost:8080)
+- phpMyAdmin: [http://localhost:8081](http://localhost:8081)
+
+### ✅ 3. Database Login:
+- **Host**: `mysql`
+- **Username**: `root`
+- **Password**: `root`
+
+---
+
+## ☸️ Run the Project Locally with Kubernetes (via Docker Desktop)
+
+### ✅ 1. Make sure Kubernetes is enabled in Docker Desktop.
+
+### ✅ 2. Create a ConfigMap for the init.sql file:
+```bash
+kubectl create configmap init-sql-config \
+  --from-file=scripts/init.sql
+```
+
+### ✅ 3. Apply the manifests:
+```bash
+kubectl apply -f k8s/
+```
+
+### ✅ 4. Check the status:
+```bash
+kubectl get pods
+kubectl get services
+```
+
+### ✅ 5. Access the services:
+- Use `kubectl port-forward` or set services to `NodePort` for local access.
+
+---
+
+## ☁️ Deploy the Project on Google Kubernetes Engine (GKE)
+
+### ⚙️ Prerequisites:
+- Google Cloud Platform account
+- Kubernetes Engine API enabled
+- Google Cloud SDK installed
+- kubectl installed
+
+### ✅ Setup environment:
 ```bash
 gcloud init
 gcloud auth login
@@ -46,32 +95,28 @@ gcloud config set project <project-id>
 gcloud config set compute/zone <your-zone>
 ```
 
----
-
-## 🚀 خطوات النشر على Google Kubernetes Engine
-
-### ✅ 1. إنشاء Cluster:
+### ✅ 1. Create the Cluster:
 ```bash
 gcloud container clusters create-auto php-app-cluster --region us-central1
 ```
 
-### ✅ 2. تحميل بيانات الاعتماد:
+### ✅ 2. Get credentials:
 ```bash
 gcloud container clusters get-credentials php-app-cluster --region us-central1
 ```
 
-### ✅ 3. إنشاء ConfigMap لملف init.sql:
+### ✅ 3. Create ConfigMap for init.sql:
 ```bash
 kubectl create configmap init-sql-config \
   --from-file=scripts/init.sql
 ```
 
-### ✅ 4. تطبيق جميع ملفات Kubernetes:
+### ✅ 4. Deploy the Kubernetes manifests:
 ```bash
 kubectl apply -f k8s/
 ```
 
-### ✅ 5. التحقق من الحالة:
+### ✅ 5. Check the status:
 ```bash
 kubectl get pods
 kubectl get services
@@ -79,46 +124,46 @@ kubectl get services
 
 ---
 
-## 📶 روابط الوصول (بعد النشر)
-- تطبيق PHP: `http://<EXTERNAL-IP-of-php-service>`
+## 🌐 Public Access (after deployment)
+- PHP App: `http://<EXTERNAL-IP-of-php-service>`
 - phpMyAdmin: `http://<EXTERNAL-IP-of-phpmyadmin-service>`
 
-يمكن الحصول على الروابط عبر الأمر:
+### Get External IP:
 ```bash
 kubectl get svc
 ```
 
 ---
 
-## 📁 شرح الملفات المهمة
+## 📂 Explanation of Key Files
 
 ### Dockerfile
-يحدد بيئة تشغيل PHP وتشغيل التطبيق من مجلد `src/`
+Defines PHP runtime environment and copies application files from `src/`.
 
 ### docker-compose.yml
-يستخدم لتشغيل البيئة محليًا (PHP + MySQL + phpMyAdmin) لتجربة المشروع قبل النشر.
+Runs the full stack (PHP, MySQL, phpMyAdmin) for local development.
 
 ### scripts/init.sql
-ملف SQL لتهيئة قاعدة البيانات (إنشاء الجداول، إضافة بيانات أولية...)
+Initial SQL script to set up the database schema and seed data.
 
-### ملفات k8s/
-تحتوي على تعريفات `Deployment` و `Service` لتشغيل كل من:
+### k8s/
+Kubernetes manifests for deploying:
 - MySQL
-- تطبيق PHP
+- PHP app
 - phpMyAdmin
 
 ---
 
-## 🛠️ ملاحظات
-- تمت مراعاة متطلبات GKE Autopilot بإضافة resources (CPU/Memory).
-- يمكن ربط التطبيق بدومين مجاني لاحقًا باستخدام DNS.
-- تم استخدام صور رسمية من Docker Hub لتبسيط النشر.
+## 🧠 Technical Notes
+- GKE Autopilot requires resource limits; apply `resources` for CPU/Memory.
+- Official Docker images were used for simplicity and reliability.
+- Use `.env` for sensitive configuration values in production.
 
 ---
 
-## 🎓 للاستخدام الأكاديمي فقط
-تم إعداد هذا المشروع لغرض دراسي وتعليمي، ويمكن استخدامه كنموذج لمشاريع النشر السحابي.
+## 🎓 For Academic Use Only
+This project is prepared for educational purposes and can be reused as a cloud deployment sample.
 
 ---
 
-بالتوفيق في عرضك! 🚀
+Good luck with your presentation! 🚀
