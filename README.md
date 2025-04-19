@@ -21,7 +21,6 @@ php-app/
 │   ├── index.php
 │   ├── login.php
 │   ├── register.php
-│   ├── db.php
 │   └── styles.css
 ├── k8s/
 │   ├── mysql-deployment.yaml
