@@ -58,8 +58,7 @@ docker-compose up --build
 
 ### ✅ 2. Create a ConfigMap for the init.sql file:
 ```bash
-kubectl create configmap init-sql-config \
-  --from-file=scripts/init.sql
+kubectl create configmap init-sql-config --from-file=scripts/init.sql
 ```
 
 ### ✅ 3. Apply the manifests:
