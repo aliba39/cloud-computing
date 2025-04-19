@@ -26,11 +26,11 @@ php-app/
 ├── k8s/
 │   ├── mysql-deployment.yaml
 │   ├── mysql-service.yaml
-│   ├── php-deployment.yaml
+│   ├── mysql-configmap.yaml
 │   ├── php-service.yaml
-│   ├── phpmyadmin.yaml
+│   ├── php-deployment.yaml
 │   ├── phpmyadmin-service.yaml
-│   └── init-sql-configmap.yaml
+│   └── phpmyadmin.yaml
 ```
 
 ---
